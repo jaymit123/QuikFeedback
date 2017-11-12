@@ -1,19 +1,27 @@
 {
-  "name": "feedbackwebapp",
-  "version": "1.0.0",
-  "description": "A WebApp that collects end-user feedback for buisnesses and companies",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jaymit123/FeedbackWebApp.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jaymit123/FeedbackWebApp/issues"
-  },
-  "homepage": "https://github.com/jaymit123/FeedbackWebApp#readme"
+    "name": "feedbackwebapp",
+    "version": "1.0.0",
+    "description": "A WebApp that collects end-user feedback for buisnesses and companies",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "engines": {
+        "node": "8.9.1",
+        "npm": "5.5.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jaymit123/FeedbackWebApp.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jaymit123/FeedbackWebApp/issues"
+    },
+    "homepage": "https://github.com/jaymit123/FeedbackWebApp#readme",
+    "dependencies": {
+        "express": "^4.16.2"
+    }
 }
