@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieSession = require('cookie-session');
 
-const credentials = require('./config/devs');
+const credentials = require('./config/keys');
 const passport = require('passport');
 const app = express();
 app.use(cookieSession({

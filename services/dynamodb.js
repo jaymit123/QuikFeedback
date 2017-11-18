@@ -1,12 +1,12 @@
 const AWS = require('aws-sdk');
 
-const credentials = require('../config/devs');
+const credentials = require('../config/keys');
 
 const uuid = require('uuid/v1');
 
 
 
-if (credentials) {
+if (credentials.AWSCredentials) {
     AWS.config.update(new AWS.Config({
         accessKeyId: credentials.AWSCredentials.accesskeyId,
         secretAccessKey: credentials.AWSCredentials.secretAccessKey,
@@ -14,13 +14,7 @@ if (credentials) {
     }));
 }
 
-
-
 dynamodb = new AWS.DynamoDB();
-
-
-
-
 
 function insertUser(googleId, email, user_entry, callback) {
     user_entry.TableName = "quikfeedback-user-dev";
