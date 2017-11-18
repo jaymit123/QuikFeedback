@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon index.js"
     },
     "engines": {
         "node": "8.9.1",
@@ -22,8 +23,12 @@
     },
     "homepage": "https://github.com/jaymit123/FeedbackWebApp#readme",
     "dependencies": {
+        "aws-sdk": "^2.151.0",
+        "cookie-session": "^2.0.0-beta.3",
         "express": "^4.16.2",
+        "nodemon": "^1.12.1",
         "passport": "^0.4.0",
-        "passport-google-oauth20": "^1.0.0"
+        "passport-google-oauth20": "^1.0.0",
+        "uuid": "^3.1.0"
     }
 }

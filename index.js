@@ -1,9 +1,21 @@
 const express = require('express');
-const app = express();
+const cookieSession = require('cookie-session');
 
-app.get("/", (req, res) => res.send({ hi: 'there' }));
+const credentials = require('./config/devs');
+const passport = require('passport');
+const app = express();
+app.use(cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [credentials.cookieKey]
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+require('./services/passport');
+require('./routes/authroutes')(app);
+
+
 
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {});
+app.listen(PORT, () => { console.log(PORT); });
