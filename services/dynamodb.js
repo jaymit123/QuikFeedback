@@ -1,12 +1,12 @@
 const AWS = require('aws-sdk');
 
-const credentials = require('../config/devs');
+const credentials = require('../config/keys');
 
 const uuid = require('uuid/v1');
 
 
 
-if (credentials) {
+if (credentials.AWSCredentials) {
     AWS.config.update(new AWS.Config({
         accessKeyId: credentials.AWSCredentials.accessKeyId,
         secretAccessKey: credentials.AWSCredentials.secretAccessKey,
@@ -14,16 +14,10 @@ if (credentials) {
     }));
 }
 
-
-
 dynamodb = new AWS.DynamoDB();
 
-
-
-
-
 function insertUser(googleId, email, user_entry, callback) {
-    user_entry.TableName = "quikfeedback-user-dev";
+    user_entry.TableName = credentials.TableName;
     user_entry.Item = {
         "id": {
             S: uuid()
@@ -43,7 +37,7 @@ function insertUser(googleId, email, user_entry, callback) {
 
 function getUserByGoogleId(googleId, callback) {
     let user_entry = {
-        TableName: "quikfeedback-user-dev",
+        TableName: credentials.TableName,
         Key: {
             "googleId": {
                 S: googleId
@@ -56,7 +50,7 @@ function getUserByGoogleId(googleId, callback) {
 
 function getUserByUID(id, callback) {
     let user_entry = {
-        TableName: "quikfeedback-user-dev",
+        TableName: credentials.TableName,
         IndexName: "id-index",
         KeyConditionExpression: "id = :v1",
 

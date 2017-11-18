@@ -1,6 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const credential = process.env.GoogleOAuth || require('../config/devs');
+const credential = require('../config/keys');
 const dynamodb = require('./dynamodb');
 
 
