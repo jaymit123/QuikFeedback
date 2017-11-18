@@ -1,7 +1,7 @@
 module.exports = {
     "OAuthCredentials": {
         "clientID": process.env.GOOGLE_CLIENT_ID,
-        "clientSecret": process.env.CLIENT_SECRET
+        "clientSecret": process.env.GOOGLE_CLIENT_SECRET
     },
 
     "AWSCredentials": null,
