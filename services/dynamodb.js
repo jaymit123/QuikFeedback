@@ -8,7 +8,7 @@ const uuid = require('uuid/v1');
 
 if (credentials) {
     AWS.config.update(new AWS.Config({
-        accessKeyId: credentials.AWSCredentials.accesskeyId,
+        accessKeyId: credentials.AWSCredentials.accessKeyId,
         secretAccessKey: credentials.AWSCredentials.secretAccessKey,
         region: credentials.AWSCredentials.region
     }));
