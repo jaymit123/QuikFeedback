@@ -17,7 +17,7 @@ if (credentials.AWSCredentials) {
 dynamodb = new AWS.DynamoDB();
 
 function insertUser(googleId, email, user_entry, callback) {
-    user_entry.TableName = "quikfeedback-user-dev";
+    user_entry.TableName = credentials.TableName;
     user_entry.Item = {
         "id": {
             S: uuid()
@@ -37,7 +37,7 @@ function insertUser(googleId, email, user_entry, callback) {
 
 function getUserByGoogleId(googleId, callback) {
     let user_entry = {
-        TableName: "quikfeedback-user-dev",
+        TableName: credentials.TableName,
         Key: {
             "googleId": {
                 S: googleId
@@ -50,7 +50,7 @@ function getUserByGoogleId(googleId, callback) {
 
 function getUserByUID(id, callback) {
     let user_entry = {
-        TableName: "quikfeedback-user-dev",
+        TableName: credentials.TableName,
         IndexName: "id-index",
         KeyConditionExpression: "id = :v1",
 

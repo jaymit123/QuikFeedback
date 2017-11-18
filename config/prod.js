@@ -6,5 +6,8 @@ module.exports = {
 
     "AWSCredentials": null,
 
-    "cookieKey": process.env.COOKIE_KEY
+    "cookieKey": process.env.COOKIE_KEY,
+    "TableName": process.env.DYNAMODB_USER_TABLE
+
+
 };
