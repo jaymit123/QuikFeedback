@@ -26,6 +26,7 @@ passport.use(new GoogleStrategy({
         clientID: credential.OAuthCredentials.clientID,
         clientSecret: credential.OAuthCredentials.clientSecret,
         callbackURL: "/auth/google/callback",
+        proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
         let email = profile.emails[0]['value'];
