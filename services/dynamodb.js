@@ -16,7 +16,7 @@ if (credentials.AWSCredentials) {
 
 dynamodb = new AWS.DynamoDB();
 
-async function insertUser(googleId, email, user_entry, callback) {
+async function insertUser(googleId, email, user_entry) {
   user_entry.TableName = credentials.TableName;
   user_entry.Item = {
     id: {
