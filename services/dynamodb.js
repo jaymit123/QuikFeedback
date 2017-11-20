@@ -1,91 +1,81 @@
-const AWS = require('aws-sdk');
+const AWS = require("aws-sdk");
 
-const credentials = require('../config/keys');
+const credentials = require("../config/keys");
 
-const uuid = require('uuid/v1');
-
-
+const uuid = require("uuid/v1");
 
 if (credentials.AWSCredentials) {
-    AWS.config.update(new AWS.Config({
-        accessKeyId: credentials.AWSCredentials.accessKeyId,
-        secretAccessKey: credentials.AWSCredentials.secretAccessKey,
-        region: credentials.AWSCredentials.region
-    }));
+  AWS.config.update(
+    new AWS.Config({
+      accessKeyId: credentials.AWSCredentials.accessKeyId,
+      secretAccessKey: credentials.AWSCredentials.secretAccessKey,
+      region: credentials.AWSCredentials.region
+    })
+  );
 }
 
 dynamodb = new AWS.DynamoDB();
 
-function insertUser(googleId, email, user_entry, callback) {
-    user_entry.TableName = credentials.TableName;
-    user_entry.Item = {
-        "id": {
-            S: uuid()
-        },
-        "googleId": {
-            S: googleId
-        },
-        "email": {
-            S: email
-        }
-    };
+async function insertUser(googleId, email, user_entry, callback) {
+  user_entry.TableName = credentials.TableName;
+  user_entry.Item = {
+    id: {
+      S: uuid()
+    },
+    googleId: {
+      S: googleId
+    },
+    email: {
+      S: email
+    }
+  };
 
-
-    dynamodb.putItem(user_entry, callback);
+  let result = await dynamodb.putItem(user_entry).promise().then( entry => entry.Item);
+  return result;
 }
 
-
-function getUserByGoogleId(googleId, callback) {
-    let user_entry = {
-        TableName: credentials.TableName,
-        Key: {
-            "googleId": {
-                S: googleId
-            },
-
-        }
-    };
-    dynamodb.getItem(user_entry, callback);
+async function getUserByGoogleId(googleId) {
+  let user_entry = {
+    TableName: credentials.TableName,
+    Key: {
+      googleId: {
+        S: googleId
+      }
+    }
+  };
+  let result = await dynamodb.getItem(user_entry).promise().then( entry => entry.Item);
+  return result;
 }
 
-function getUserByUID(id, callback) {
-    let user_entry = {
-        TableName: credentials.TableName,
-        IndexName: "id-index",
-        KeyConditionExpression: "id = :v1",
+async function getUserByUID(id) {
+  let user_entry = {
+    TableName: credentials.TableName,
+    IndexName: "id-index",
+    KeyConditionExpression: "id = :v1",
 
-        ExpressionAttributeValues: {
-            ":v1": {
-                S: id
-            }
-        }
-
-    };
-    dynamodb.query(user_entry, callback);
+    ExpressionAttributeValues: {
+      ":v1": {
+        S: id
+      }
+    }
+  };
+  let result = await dynamodb.query(user_entry).promise().then( entry => entry.Items);
+  return result;
 }
 
-
-
-
-function accountCreate(googleId, email, done) {
-
-    getUserByGoogleId(googleId, (err, user) => {
-
-        if (!err && user.length > 0) {
-            done(null, user);
-
-        } else {
-            var user_entry = {}
-            insertUser(googleId, email, user_entry, (err, user) => {
-
-                if (!err) {
-                    done(null, user_entry);
-                }
-            });
-        }
-
-    });
-
+async function accountCreate(googleId, email, done) {
+  try {
+    let queryResult = await getUserByGoogleId(googleId);
+    if (queryResult) {
+      done(null, queryResult);
+    } else {
+      var user_entry = {};
+      let isSuccess = await insertUser(googleId, email, user_entry);
+      done(null, user_entry);
+    }
+  } catch (er) {
+    console.log(er);
+  }
 }
 
 exports.insertUser = insertUser;
