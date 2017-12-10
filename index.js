@@ -15,6 +15,15 @@ require('./services/passport');
 require('./routes/authRoutes')(app);
 require('./routes/paymentRoutes')(app);
 
+if(process.env.NODE_ENV === 'production'){
+//Express servers production assets
+app.use(express.static('client/build'));
+
+//Express servs index.html file if no url found
+
+}
+
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => { console.log(PORT); });
