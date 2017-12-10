@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import { logoutUser } from "../actions";
+import Payments from "./Payments";
 
 class Header extends Component {
   constructor() {
@@ -11,7 +12,7 @@ class Header extends Component {
 
   logoutUser() {
     this.props.logoutUser();
-this.props.history.push("/");
+    this.props.history.push("/");
   }
 
   renderContent() {
@@ -19,10 +20,22 @@ this.props.history.push("/");
       case null:
         return;
       case false:
-        return <a href="/auth/google">Sign in with Google</a>;
+        return [
+          <li key="SignIn">
+            <a href="/auth/google">Sign in with Google</a>
+          </li>
+        ];
 
       default:
-        return <a onClick={() => this.logoutUser()}>Sign Out</a>;
+        return [
+          <li key="Payments">
+            <Payments />
+          </li>,
+          <li key="Credits" style={{margin:'0 10px'}}>Credits: {this.props.auth.credits.N}</li>,
+          <li key="Logout" >
+            <a onClick={() => this.logoutUser()}>Sign Out</a>
+          </li>
+        ];
     }
   }
   render() {
@@ -35,9 +48,7 @@ this.props.history.push("/");
           >
             QuikFeedback
           </Link>
-          <ul className="right">
-            <li>{this.renderContent()}</li>
-          </ul>
+          <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
     );
