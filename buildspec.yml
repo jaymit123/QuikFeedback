@@ -1,3 +1,4 @@
+version: 0.2
 phases:
   install:
     commands:
@@ -8,8 +9,11 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - npm run install
+      - npm  install
   post_build:
     commands:
       - echo Build completed on `date`
       - npm run aws-postbuild
+artifacts:
+    files:
+      - '**/*'
