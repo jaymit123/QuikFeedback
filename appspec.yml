@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/QuikFeedback
+hooks:
+  BeforeInstall:
+    - location: scripts/npm-init.sh
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/npm-start.sh
+      runas: ec2-user
