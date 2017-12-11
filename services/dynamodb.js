@@ -16,6 +16,27 @@ if (credentials.AWSCredentials) {
 
 dynamodb = new AWS.DynamoDB();
 
+
+async function updateUser(googleId, credits) {
+  let user_entry = {
+    TableName: credentials.TableName,
+    Key: {
+      googleId: {
+        S: googleId
+      }
+    },
+    ExpressionAttributeValues: {
+      ":u1": {
+        N: String(credits)
+      }
+    },
+    UpdateExpression: "ADD credits :u1",
+    ReturnValues: "ALL_NEW"
+  };
+  let result = await dynamodb.updateItem(user_entry).promise();
+  return result.Attributes;
+}
+
 async function insertUser(googleId, email, user_entry) {
   user_entry.TableName = credentials.TableName;
   user_entry.Item = {
@@ -27,10 +48,16 @@ async function insertUser(googleId, email, user_entry) {
     },
     email: {
       S: email
+    },
+    credits: {
+      N: 0
     }
   };
 
-  let result = await dynamodb.putItem(user_entry).promise().then( entry => entry.Item);
+  let result = await dynamodb
+    .putItem(user_entry)
+    .promise()
+    .then(entry => entry.Item);
   return result;
 }
 
@@ -43,7 +70,10 @@ async function getUserByGoogleId(googleId) {
       }
     }
   };
-  let result = await dynamodb.getItem(user_entry).promise().then( entry => entry.Item);
+  let result = await dynamodb
+    .getItem(user_entry)
+    .promise()
+    .then(entry => entry.Item);
   return result;
 }
 
@@ -59,7 +89,10 @@ async function getUserByUID(id) {
       }
     }
   };
-  let result = await dynamodb.query(user_entry).promise().then( entry => entry.Items);
+  let result = await dynamodb
+    .query(user_entry)
+    .promise()
+    .then(entry => entry.Items);
   return result;
 }
 
@@ -78,7 +111,12 @@ async function accountCreate(googleId, email, done) {
   }
 }
 
-exports.insertUser = insertUser;
-exports.getUserByGoogleId = getUserByGoogleId;
-exports.getUserByUID = getUserByUID;
-exports.accountCreate = accountCreate;
+
+module.exports = {
+  insertUser,
+  getUserByGoogleId,
+  getUserByUID,
+  accountCreate,
+  updateUser
+};
+
