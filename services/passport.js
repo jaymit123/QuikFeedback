@@ -10,11 +10,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
   try {
     let user_entry = await dynamodb.getUserByUID(id);
-<<<<<<< HEAD
     done(null,user_entry);
-=======
-    done(null, user_entry);
->>>>>>> FrontEnd
   } catch (er) {
     console.log(er);
   }
@@ -28,17 +24,11 @@ passport.use(
       callbackURL: "/auth/google/callback",
       proxy: true
     },
-<<<<<<< HEAD
-    (accessToken, refreshToken, profile, done) => {
-      let email = profile.emails[0]["value"];
-      let googleId = profile.id;
-      dynamodb.accountCreate(googleId, email, done);
-=======
+
     async (accessToken, refreshToken, profile, done) => {
       let email = profile.emails[0]["value"];
       let googleId = profile.id;
       await dynamodb.accountCreate(googleId, email, done);
->>>>>>> FrontEnd
     }
   )
 );
