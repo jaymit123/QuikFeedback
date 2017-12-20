@@ -7,3 +7,11 @@ hooks:
   ApplicationStart:
     - location: scripts/npm-start.sh
       runas: ec2-user
+
+  ApplicationStop:
+    - location: scripts/npm-stop.sh
+      runas: ec2-user
+
+  AfterInstall:
+    - location: scripts/npm-install.sh
+       runas: ec2-user
