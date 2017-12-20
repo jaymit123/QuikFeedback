@@ -20,7 +20,10 @@ if(process.env.NODE_ENV === 'production'){
 app.use(express.static('client/build'));
 
 //Express servs index.html file if no url found
-
+const path = require('path');
+app.get("*",(req,res) =>{
+res.sendFile(path.resolve(__dirname,"client","build","index.html"));
+});
 }
 
 
