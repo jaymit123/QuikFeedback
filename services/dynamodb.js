@@ -30,7 +30,7 @@ async function updateUser(googleId, credits) {
         N: String(credits)
       }
     },
-    UpdateExpressicreditscreditscreditson: "ADD credits :u1",
+    UpdateExpression: "ADD credits :u1",
     ReturnValues: "ALL_NEW"
   };
   let result = await dynamodb.updateItem(user_entry).promise();
@@ -59,7 +59,7 @@ async function insertUser(googleId, email, user_entry) {
     .promise()
     .then(entry => entry.Item);
   return result;
-}creditscreditscredits
+}
 
 async function getUserByGoogleId(googleId) {
   let user_entry = {
@@ -75,10 +75,10 @@ async function getUserByGoogleId(googleId) {
     .promise()
     .then(entry => entry.Item);
   return result;
-}creditscrecreditscreditscreditscreditsdits
+}
 
 async function getUserByUID(id) {
-  let user_creditscreditsentry = {
+  let user_entry = {
     TableName: credentials.TableName,
     IndexName: "id-index",
     KeyConditionExpression: "id = :v1",
@@ -105,7 +105,7 @@ async function accountCreate(googleId, email, done) {
       var user_entry = {};
       let isSuccess = await insertUser(googleId, email, user_entry);
       done(null, user_entry);
-    }credits
+    }
   } catch (er) {
     console.log(er);
   }
