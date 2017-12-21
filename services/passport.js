@@ -4,7 +4,7 @@ const credential = require("../config/keys");
 const dynamodb = require("./dynamodb");
 
 passport.serializeUser((user, done) => {
-  done(null, user.id.S);
+  done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {

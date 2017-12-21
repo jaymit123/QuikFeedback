@@ -14,19 +14,19 @@ if (credentials.AWSCredentials) {
   );
 }
 
-dynamodb = new AWS.DynamoDB();
 
+dynamodb = new AWS.DynamoDB.DocumentClient();
 
 async function updateUser(googleId, credits) {
   let user_entry = User.UpdateUser(googleId,credits);
-  let result = await dynamodb.updateItem(user_entry).promise();
+  let result = await dynamodb.update(user_entry).promise();
   return result.Attributes;
 }
 
 async function insertUser(googleId, email) {
   let user_entry = User.CreateUser(googleId,email);
   let result = await dynamodb
-    .putItem(user_entry)
+    .put(user_entry)
     .promise();
   return user_entry;
 }
@@ -34,7 +34,7 @@ async function insertUser(googleId, email) {
 async function getUserByGoogleId(googleId) {
   let user_entry = User.UserByGoogleId(googleId); 
   let result = await dynamodb
-    .getItem(user_entry)
+    .get(user_entry)
     .promise()
     .then(entry => entry.Item);
   return result;

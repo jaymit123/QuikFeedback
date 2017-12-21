@@ -6,18 +6,10 @@ const CreateUser = (googleId,email) => {
     return {
     TableName : credentials.UserTable,
     Item : {
-      id: {
-        S: uuid()
-      },
-      googleId: {
-        S: googleId
-      },
-      email: {
-        S: email
-      },
-      credits: {
-        N: "0"
-      }
+      id: uuid(),
+      googleId: googleId,
+      email: email,
+      credits: 0
     }};
 }
 
@@ -26,14 +18,10 @@ const UpdateUser = (googleId,credits) => {
   return  {
         TableName: credentials.UserTable,
         Key: {
-          googleId: {
-            S: googleId
-          }
+          googleId:  googleId   
         },
         ExpressionAttributeValues: {
-          ":u1": {
-            N: String(credits)
-          }
+          ":u1": credits
         },
         UpdateExpression: "ADD credits :u1",
         ReturnValues: "ALL_NEW"
@@ -44,9 +32,7 @@ const UserByGoogleId = (googleId) => {
     return {
         TableName: credentials.UserTable,
         Key: {
-          googleId: {
-            S: googleId
-          }
+          googleId: googleId
         }
       };
 }
@@ -57,11 +43,8 @@ const UserByUID = (id) => {
         TableName: credentials.UserTable,
         IndexName: "id-index",
         KeyConditionExpression: "id = :v1",
-    
         ExpressionAttributeValues: {
-          ":v1": {
-            S: id
-          }
+          ":v1":  id
         }
       };
 }
