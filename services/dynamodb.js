@@ -56,9 +56,7 @@ async function insertUser(googleId, email, user_entry) {
 
   let result = await dynamodb
     .putItem(user_entry)
-    .promise()
-    .then(entry => entry.Item);
-  return result;
+    .promise();
 }
 
 async function getUserByGoogleId(googleId) {
@@ -103,7 +101,7 @@ async function accountCreate(googleId, email, done) {
       done(null, queryResult);
     } else {
       var user_entry = {};
-      let isSuccess = await insertUser(googleId, email, user_entry);
+      await insertUser(googleId, email, user_entry);
       done(null, user_entry);
     }
   } catch (er) {
