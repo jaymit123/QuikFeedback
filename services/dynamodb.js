@@ -102,7 +102,7 @@ async function accountCreate(googleId, email, done) {
     } else {
       var user_entry = {};
       await insertUser(googleId, email, user_entry);
-      done(null, user_entry);
+      done(null, user_entry.Item);
     }
   } catch (er) {
     console.log(er);
