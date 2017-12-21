@@ -1,8 +1,8 @@
 const AWS = require("aws-sdk");
-
+const User = require("../models/User");
 const credentials = require("../config/keys");
 
-const uuid = require("uuid/v1");
+
 
 if (credentials.AWSCredentials) {
   AWS.config.update(
@@ -18,56 +18,21 @@ dynamodb = new AWS.DynamoDB();
 
 
 async function updateUser(googleId, credits) {
-  let user_entry = {
-    TableName: credentials.TableName,
-    Key: {
-      googleId: {
-        S: googleId
-      }
-    },
-    ExpressionAttributeValues: {
-      ":u1": {
-        N: String(credits)
-      }
-    },
-    UpdateExpression: "ADD credits :u1",
-    ReturnValues: "ALL_NEW"
-  };
+  let user_entry = User.UpdateUser(googleId,credits);
   let result = await dynamodb.updateItem(user_entry).promise();
   return result.Attributes;
 }
 
-async function insertUser(googleId, email, user_entry) {
-  user_entry.TableName = credentials.TableName;
-  user_entry.Item = {
-    id: {
-      S: uuid()
-    },
-    googleId: {
-      S: googleId
-    },
-    email: {
-      S: email
-    },
-    credits: {
-      N: "0"
-    }
-  };
-
+async function insertUser(googleId, email) {
+  let user_entry = User.CreateUser(googleId,email);
   let result = await dynamodb
     .putItem(user_entry)
     .promise();
+  return user_entry;
 }
 
 async function getUserByGoogleId(googleId) {
-  let user_entry = {
-    TableName: credentials.TableName,
-    Key: {
-      googleId: {
-        S: googleId
-      }
-    }
-  };
+  let user_entry = User.UserByGoogleId(googleId); 
   let result = await dynamodb
     .getItem(user_entry)
     .promise()
@@ -76,17 +41,7 @@ async function getUserByGoogleId(googleId) {
 }
 
 async function getUserByUID(id) {
-  let user_entry = {
-    TableName: credentials.TableName,
-    IndexName: "id-index",
-    KeyConditionExpression: "id = :v1",
-
-    ExpressionAttributeValues: {
-      ":v1": {
-        S: id
-      }
-    }
-  };
+  let user_entry = User.UserByUID(id);
   let result = await dynamodb
     .query(user_entry)
     .promise()
@@ -100,8 +55,7 @@ async function accountCreate(googleId, email, done) {
     if (queryResult) {
       done(null, queryResult);
     } else {
-      var user_entry = {};
-      await insertUser(googleId, email, user_entry);
+      let user_entry = await insertUser(googleId, email);
       done(null, user_entry.Item);
     }
   } catch (er) {

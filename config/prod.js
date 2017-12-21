@@ -7,7 +7,7 @@ module.exports = {
     "AWSCredentials": null,
 
     "cookieKey": process.env.COOKIE_KEY,
-    "TableName": process.env.DYNAMODB_USER_TABLE,
+    "UserTable": process.env.DYNAMODB_USER_TABLE,
     "stripePublishableKey" : process.env.STRIPE_PUBLISHABLE_KEY,
     "stripeSecretKey": process.env.STRIPE_SECRET_KEY
 
