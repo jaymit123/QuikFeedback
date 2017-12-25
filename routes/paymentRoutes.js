@@ -11,7 +11,7 @@ module.exports = app => {
         description: "$5 for 5 credits",
         source: req.body.id
       });
-      const user = await dynamodb.updateUser(req.user[0].googleId, 5);
+      const user = await dynamodb.addCredits(req.user.googleId, 5);
       res.send(user);
     } catch (e) {
       console.log(e);

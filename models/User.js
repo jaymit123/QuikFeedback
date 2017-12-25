@@ -2,6 +2,9 @@ const uuid = require("uuid/v1");
 const credentials = require("../config/keys");
 
 
+const AddCredit = "ADD";
+const SubtractCredit = "SUB";
+
 const CreateUser = (googleId,email) => {
     return {
     TableName : credentials.UserTable,
@@ -14,7 +17,24 @@ const CreateUser = (googleId,email) => {
 }
 
 
-const UpdateUser = (googleId,credits) => {
+const DeductCredits = (googleId,credits) => {
+
+  return  {
+        TableName: credentials.UserTable,
+        Key: {
+          googleId:  googleId   
+        },
+        ExpressionAttributeValues: {
+          ":u1": credits
+        },
+        UpdateExpression: "SET credits = credits - :u1",
+        ReturnValues: "ALL_NEW"
+      };
+}
+
+
+const AddCredits = (googleId,credits) => {
+
   return  {
         TableName: credentials.UserTable,
         Key: {
@@ -50,5 +70,5 @@ const UserByUID = (id) => {
 }
 
 module.exports = {
-    CreateUser,UpdateUser,UserByGoogleId,UserByUID
+    CreateUser,AddCredits,UserByGoogleId,UserByUID,DeductCredits
 }

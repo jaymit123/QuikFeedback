@@ -17,8 +17,19 @@ if (credentials.AWSCredentials) {
 
 dynamodb = new AWS.DynamoDB.DocumentClient();
 
-async function updateUser(googleId, credits) {
-  let user_entry = User.UpdateUser(googleId,credits);
+
+async function insertSurvey(survey){
+  await dynamodb.put(survey).promise();
+}
+
+async function addCredits(googleId, credits) {
+  let user_entry = User.AddCredits(googleId,credits);
+  let result = await dynamodb.update(user_entry).promise();
+  return result.Attributes;
+}
+
+async function deductCredits(googleId, credits) {
+  let user_entry = User.DeductCredits(googleId,credits);
   let result = await dynamodb.update(user_entry).promise();
   return result.Attributes;
 }
@@ -42,13 +53,13 @@ async function getUserByGoogleId(googleId) {
 
 async function getUserByUID(id) {
   let user_entry = User.UserByUID(id);
-  let result = await dynamodb
+  let result 
+= await dynamodb
     .query(user_entry)
     .promise()
-    .then(entry => entry.Items);
+    .then(entry => entry.Items[0]);
   return result;
 }
-
 async function accountCreate(googleId, email, done) {
   try {
     let queryResult = await getUserByGoogleId(googleId);
@@ -69,6 +80,8 @@ module.exports = {
   getUserByGoogleId,
   getUserByUID,
   accountCreate,
-  updateUser
+  addCredits,
+  insertSurvey,
+  deductCredits
 };
 

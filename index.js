@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 require('./services/passport');
 require('./routes/authRoutes')(app);
 require('./routes/paymentRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if(process.env.NODE_ENV === 'production'){
 //Express servers production assets
