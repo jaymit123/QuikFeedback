@@ -1,7 +1,7 @@
 
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
-const dynamodb = require('../services/dynamodb');
+const dynamodb = require('../services/DynamoDB');
 const Mailer = require('../services/Mailer');
 const Recipient = require('../models/Recipient');
 const Survey = require('../models/Survey');

@@ -1,7 +1,7 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const credential = require("../config/keys");
-const dynamodb = require("./dynamodb");
+const dynamodb = require("./DynamoDB");
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
