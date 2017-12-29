@@ -1,7 +1,14 @@
+/**
+ * Add Payment routes to express App
+ */
+
+ //Load dependencies
 const keys = require("../config/keys");
 const stripe = require("stripe")(keys.stripeSecretKey);
-const dynamodb = require("../services/dynamodb");
+const dynamodb = require("../services/DynamoDB");
 const requireLogin = require("../middlewares/requireLogin");
+
+//Confirm payment by adding credits to user account
 module.exports = app => {
   app.post("/api/payment", requireLogin, async (req, res) => {
     try {

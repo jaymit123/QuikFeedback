@@ -1,5 +1,11 @@
+/**
+ * Survey Model used to query dynamodb 
+ */
+
+ //Load dependencies
 const credentials = require("../config/keys");
 const uuid = require('uuid/v1');
+
 const CreateSurvey = (user,title,body,subject,recipients,dateSent) => {
     return {
     TableName : credentials.SurveysTable,

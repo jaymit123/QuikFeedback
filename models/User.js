@@ -1,9 +1,12 @@
+/**
+ * User Model used to query dynamodb
+ */
+
+ //Load dependencies
 const uuid = require("uuid/v1");
 const credentials = require("../config/keys");
 
 
-const AddCredit = "ADD";
-const SubtractCredit = "SUB";
 
 const CreateUser = (googleId,email) => {
     return {

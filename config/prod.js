@@ -1,3 +1,4 @@
+//Read credentials from enviornment variables.
 module.exports = {
     "OAuthCredentials": {
         "clientID": process.env.GOOGLE_CLIENT_ID,
