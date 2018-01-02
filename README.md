@@ -8,8 +8,8 @@ important information to users.
 - SendGrid API to send emails
 - AWS Code Pipeline to automate code deployment 
 
-Back End : Passport JS, AWS SDK, sendgrid, stripe
-Front End: React JS, Redux, React-Redux, React-Router, Axios, stripe
+* Back End : Passport JS, AWS SDK, sendgrid, stripe
+* Front End: React JS, Redux, React-Redux, React-Router, Axios, Stripe API, ReduxForm ,
 
 ## Getting Started
 
@@ -53,21 +53,21 @@ Last, install `pm2`:
 ```
 
 ## Deployment 
-# Details on what enviornment variables to set are mentioned in the [environment-variables.md](environment-variables.md) file.
+### Details on what enviornment variables to set are mentioned in the [enviornment-variables.md](enviornment-variables.md) file.
 
 1. Create a AWS EC2 Linux AMI Instance and assign following policies to its IAM roles : `AmazonEC2RoleforAWSCodeDeploy` & `AmazonDynamoDBFullAccess`.
 
 2. Create 2 Dynamo DB tables:
-     a. User Table - googleId is partition key & id is secondary key named id-index. 
-     b. Survey Table - id is partition key. 
-     c. Set Both Tables names in the enviornment variables.
+     1. User Table - googleId is partition key & id is secondary key named id-index. 
+     2. Survey Table - id is partition key. 
+     3. Set Both Tables names in the enviornment variables.
 
 3. Assign an Elastic IP to your ec2 instance.
 
 4. Create your credentials for Google OAuth 2.0 Api 
-    a. Assign `Javascript Authorized Origins` as your ec2 instances public ip: `http://ec2-instance-public-ip`
-    b. Assign `Authorized Redirect URL's` as `http://ec2-instance-public-ip/auth/google/callback`
-    c. Copy Client ID and Client secret from the credentials you created and set it into enviornment variables.
+    1. Assign `Javascript Authorized Origins` as your ec2 instances public ip: `http://ec2-instance-public-ip`
+    2. Assign `Authorized Redirect URL's` as `http://ec2-instance-public-ip/auth/google/callback`
+    3. Copy Client ID and Client secret from the credentials you created and set it into enviornment variables.
 
 5. Create your Stripe Free Account. Copy the Stripe Publishable Key and Stripe Secret Key and set it into enviornment variables.
 
