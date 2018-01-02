@@ -5,9 +5,8 @@ import Landing from "./Landing";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import NoMatch from "./NoMatch";
-
-const Dashboard = () => <h2>Dashboard</h2>;
-const SurveyNew = () => <h2>SurveyNew</h2>;
+import Dashboard from './Dashboard';
+import SurveyNew from './surveys/SurveyNew';
 
 class App extends Component {
   componentDidMount() {
@@ -15,19 +14,17 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="container">
-        <BrowserRouter>
-          <div>
-            <Header />
-            <Switch>
-              <Route path="/" exact component={Landing} />
-              <Route path="/surveys" exact component={Dashboard} />
-              <Route path="/surveys/new" component={SurveyNew} />
-              <Route component={NoMatch} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <div className="container">
+          <Header />
+          <Switch>
+            <Route path="/" exact component={Landing} />
+            <Route path="/surveys" exact component={Dashboard} />
+            <Route path="/surveys/new" component={SurveyNew} />
+            <Route component={NoMatch} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }

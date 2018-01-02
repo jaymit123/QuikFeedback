@@ -1,17 +1,23 @@
 import axios from "axios";
-import { FETCH_USER, LOGOUT_USER } from "./types";
+import { FETCH_USER, LOGOUT_USER } from './types';
 
 export const fetchUser = () => async dispatch => {
-  const response = await axios.get("/api/current_user");
-  dispatch({ type: FETCH_USER, payload: response.data[0] });
+  const response = await axios.get('/api/current_user');
+  dispatch({ type: FETCH_USER, payload: response.data });
 };
 
 export const logoutUser = () => async dispatch => {
-  await axios.get("/api/logout");
-  dispatch({ type: LOGOUT_USER, payload: "" });
+  await axios.get('/api/logout');
+  dispatch({ type: LOGOUT_USER, payload: ''});
 };
 
 export const handlePaymentToken = token => async dispatch => {
-  const response = await axios.post("/api/payment", token);
+  const response = await axios.post('/api/payment', token);
   dispatch({ type: FETCH_USER, payload: response.data });
 };
+
+export const submitSurvey = (values,history) => async dispatch => {
+  const response = await axios.post('/api/surveys',values);
+  history.push('/surveys')
+  dispatch({ type: FETCH_USER, payload: response.data });
+}
