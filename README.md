@@ -77,9 +77,13 @@ Last, install `pm2`:
 
 8. set your STRIPE Publishable Key in `client/.env.production` file.
 
-9. Save the following line in the .bashrc file:
-    `sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5000`
-    To forward all requests from port 80 to port 5000 internally
+9. Save the following line in .bashrc file:
+```sh
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5000
+cd /home/ec2-user/QuikFeedback
+pm2 start npm -- start
+```
+To forward all requests from port 80 to port 5000 internally and to start the server on startup
 
 10. Install CodeDeploy Agent in your Ec2 Instance. Create a new AWS Code Pipeline, Link it to this project       on github and Code Build should use the `buildspec.yml` provided in the root of the project. Code Deploy     should use the `appspec.yml` in the root of the project. (It will auto deploy the project to your ec2        instance and start it, using the scripts in scripts directory).
 
