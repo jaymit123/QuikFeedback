@@ -8,7 +8,7 @@ const credentials = require('../config/keys');
 class Mailer extends helper.Mail {
 
     // Setup email with all details   
-    constructor({ Item: { subject, recipients } }, content) {
+    constructor({ Item: { subject } }, recipients, content) {
         super();
         this.sgApi = sendgrid(credentials.sendGridAPIKey);
         this.from_email = new helper.Email('no-reply@quikfeedback.com');
@@ -29,7 +29,7 @@ class Mailer extends helper.Mail {
     }
 
     formatAddresses(recipients) {
-        return recipients.map(({ email }) => {
+        return recipients.map((email) => {
             return new helper.Email(email);
         });
     }

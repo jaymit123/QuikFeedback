@@ -23,16 +23,41 @@ dynamodb = new AWS.DynamoDB.DocumentClient();
 // Insert a Survey Record
 async function insertSurvey(survey) {
   await dynamodb
-                .put(survey)
-                .promise();
+    .put(survey)
+    .promise();
 }
+
+// Update a Survey Record
+async function updateSurvey(survey) {
+  try {
+    const response = await dynamodb
+      .update(survey)
+      .promise();
+    return response;
+  } catch (e) {
+    return null;
+  }
+}
+
+// Get Surveys by User ID
+async function getSurveysByUser(survey) {
+  try {
+    const response = await dynamodb
+      .query(survey)
+      .promise();
+    return response ? response.Items : null;
+  } catch (e) {
+    return null;
+  }
+}
+
 
 // Add Credits to User Record
 async function addCredits(googleId, credits) {
   let user_entry = User.AddCredits(googleId, credits);
   let result = await dynamodb
-                            .update(user_entry)
-                            .promise();
+    .update(user_entry)
+    .promise();
   return result.Attributes;
 }
 
@@ -40,8 +65,8 @@ async function addCredits(googleId, credits) {
 async function deductCredits(googleId, credits) {
   let user_entry = User.DeductCredits(googleId, credits);
   let result = await dynamodb
-                            .update(user_entry)
-                            .promise();
+    .update(user_entry)
+    .promise();
   return result.Attributes;
 }
 
@@ -49,8 +74,8 @@ async function deductCredits(googleId, credits) {
 async function insertUser(googleId, email) {
   let user_entry = User.CreateUser(googleId, email);
   let result = await dynamodb
-                            .put(user_entry)
-                            .promise();
+    .put(user_entry)
+    .promise();
   return user_entry;
 }
 
@@ -58,9 +83,9 @@ async function insertUser(googleId, email) {
 async function getUserByGoogleId(googleId) {
   let user_entry = User.UserByGoogleId(googleId);
   let result = await dynamodb
-                            .get(user_entry)
-                            .promise()
-                            .then(entry => entry.Item);
+    .get(user_entry)
+    .promise()
+    .then(entry => entry.Item);
   return result;
 }
 
@@ -68,9 +93,9 @@ async function getUserByGoogleId(googleId) {
 async function getUserByUID(id) {
   let user_entry = User.UserByUID(id);
   let result = await dynamodb
-                            .query(user_entry)
-                            .promise()
-                            .then(entry => entry.Items[0]);
+    .query(user_entry)
+    .promise()
+    .then(entry => entry.Items[0]);
   return result;
 }
 
@@ -97,6 +122,8 @@ module.exports = {
   accountCreate,
   addCredits,
   insertSurvey,
+  updateSurvey,
+  getSurveysByUser,
   deductCredits
 };
 

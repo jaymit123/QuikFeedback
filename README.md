@@ -59,7 +59,7 @@ Last, install `pm2`:
 
 2. Create 2 Dynamo DB tables:
      1. User Table - googleId is partition key & id is secondary key named id-index. 
-     2. Survey Table - id is partition key. 
+     2. Survey Table - id is partition key. and _user , id is the secondary key named _user-id-index
      3. Set Both Tables names in the enviornment variables.
 
 3. Assign an Elastic IP to your ec2 instance.
