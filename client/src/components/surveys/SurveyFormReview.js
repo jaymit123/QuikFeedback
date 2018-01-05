@@ -1,3 +1,4 @@
+//This form helps user review what they have inputted before submitting survey form.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import formFields from './surveyFormFields';

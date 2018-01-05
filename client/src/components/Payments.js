@@ -1,8 +1,10 @@
+//Handles Stripe Payment service
 import React, { Component } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { connect } from "react-redux";
 import { handlePaymentToken } from "../actions";
 
+//Displays the Stripe Payment Modal
 class Payments extends Component {
   render() {
     return (

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import SurveyList from './surveys/SurveyList';
 import { connect } from 'react-redux';
 import { fetchSurveys } from '../actions';
+// Fetches user created surveys and displays them using SurveyList modal.
 class Dashboard extends Component {
 
     componentDidMount() {

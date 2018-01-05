@@ -1,3 +1,4 @@
+//Main root of React Front End, Decides which component to load based on route
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./Header";

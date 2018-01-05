@@ -1,3 +1,4 @@
+//Display user login status and display buttons on header
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";

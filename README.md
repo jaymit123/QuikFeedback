@@ -77,7 +77,7 @@ Last, install `pm2`:
 
 8. set your STRIPE Publishable Key in `client/.env.production` file.
 
-9. Save the following line in .bashrc file:
+9. Run the following lines on your ec2 instance to run the app.
 ```sh
 sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5000
 cd /home/ec2-user/QuikFeedback

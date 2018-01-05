@@ -1,4 +1,4 @@
-
+// displays Survey Creation Form and Validates it
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';

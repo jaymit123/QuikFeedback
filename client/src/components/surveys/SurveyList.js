@@ -1,3 +1,4 @@
+//Displays all the sureys on dashboard using Cards
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
