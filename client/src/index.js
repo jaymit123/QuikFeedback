@@ -1,3 +1,4 @@
+// Combines all the necessary parts for running the front end.
 import React from "react";
 import ReactDom from "react-dom";
 import App from "./components/App";
